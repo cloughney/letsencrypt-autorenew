@@ -1,0 +1,21 @@
+#! /bin/bash
+# Script to update Let's Encrypt certs with logging
+
+logfile="renewal_log"
+mailoutput_to="cloughney@gmail.com"
+
+echo "****************************************************" >> "$logfile"
+echo "[$(date +'%Y-%m-%d %T')] - Checking for new certs..." >> "$logfile"
+echo "****************************************************" >> "$logfile"
+
+output=`/usr/bin/certbot-auto renew --non-interactive --post-hook "apachectl restart"`
+
+echo "$output" >> "$logfile"
+echo >> "$logfile"
+
+if [ -n "$mailoutput_to" ]; then
+	echo "Sending email of log to $mailoutput_to" >> "$logfile"
+	output=`echo "$output" | mail -s "Let's Encrypt Cert Update Log" "$mailoutput_to"`
+	echo "$output" >> "$logfile"
+	echo >> "$logfile"
+fi
