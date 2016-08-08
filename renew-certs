@@ -1,7 +1,7 @@
 #! /bin/bash
 # Script to update Let's Encrypt certs with logging
 
-logfile="renewal_log"
+logfile="/etc/letsencrypt/renewal_log"
 mailoutput_to="cloughney@gmail.com"
 
 echo "****************************************************" >> "$logfile"
